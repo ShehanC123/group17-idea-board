@@ -71,11 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         ideaList.innerHTML = '';
-        [...ideas].reverse().forEach(idea => {
+        // Map ideas with their original index to handle deletion correctly after reverse
+        const ideasWithIndex = ideas.map((idea, index) => ({ ...idea, originalIndex: index }));
+        
+        [...ideasWithIndex].reverse().forEach(idea => {
             const li = document.createElement('li');
             li.className = 'idea-item';
             li.innerHTML = `
-                <span class="idea-user">${idea.user}</span>
+                <div class="idea-header">
+                    <span class="idea-user">${idea.user}</span>
+                    <button class="delete-idea-btn" data-index="${idea.originalIndex}" title="Delete Idea">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                </div>
                 <span class="idea-text">${idea.text}</span>
             `;
             ideaList.appendChild(li);
@@ -100,6 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ideaInput.value = '';
         saveData();
         renderIdeas();
+    });
+
+    // Delete Idea
+    ideaList.addEventListener('click', (e) => {
+        const deleteBtn = e.target.closest('.delete-idea-btn');
+        if (deleteBtn) {
+            const index = parseInt(deleteBtn.getAttribute('data-index'));
+            if (confirm('Are you sure you want to delete this idea?')) {
+                ideas.splice(index, 1);
+                saveData();
+                renderIdeas();
+            }
+        }
     });
 
     // Clear Inputs
