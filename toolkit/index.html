@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCSC Student Toolkit</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="light-mode">
+    <nav class="navbar">
+        <div class="nav-left">
+            <button id="sidebar-toggle"><i class="fas fa-bars"></i></button>
+            <h1>UCSC Student Toolkit</h1>
+        </div>
+        <div class="nav-right">
+            <div class="dark-mode-container">
+                <i class="fas fa-sun"></i>
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <ul>
+                <li class="active" data-section="home"><i class="fas fa-home"></i> Home</li>
+                <li data-section="timer"><i class="fas fa-stopwatch"></i> Study Timer</li>
+                <li data-section="gpa"><i class="fas fa-calculator"></i> GPA Calculator</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <!-- Home Section -->
+            <section id="home-section" class="section">
+                <h2>Welcome to UCSC Student Toolkit</h2>
+                <p>Select a tool from the sidebar to get started.</p>
+                <div class="welcome-cards">
+                    <div class="card" onclick="document.querySelector('[data-section=\'timer\']').click()">
+                        <i class="fas fa-clock"></i>
+                        <h3>Pomodoro Timer</h3>
+                        <p>Boost your productivity with 25-minute focus sessions.</p>
+                    </div>
+                    <div class="card" onclick="document.querySelector('[data-section=\'gpa\']').click()">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>GPA Calculator</h3>
+                        <p>Track your academic progress easily.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timer Section -->
+            <section id="timer-section" class="section hidden">
+                <h2>Pomodoro Study Timer</h2>
+                <div class="timer-display">
+                    <span id="minutes">25</span>:<span id="seconds">00</span>
+                </div>
+                <div class="timer-controls">
+                    <button id="start-timer" class="btn-primary">Start</button>
+                    <button id="stop-timer" class="btn-danger">Stop</button>
+                    <button id="reset-timer" class="btn-secondary">Reset</button>
+                </div>
+            </section>
+
+            <!-- GPA Section -->
+            <section id="gpa-section" class="section hidden">
+                <h2>GPA Calculator</h2>
+                <div class="gpa-container">
+                    <table id="gpa-table">
+                        <thead>
+                            <tr>
+                                <th>Course Name (Optional)</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="course-list">
+                            <tr>
+                                <td><input type="text" placeholder="e.g. CS101"></td>
+                                <td><input type="number" class="credits" placeholder="Credits" min="0" step="0.5"></td>
+                                <td>
+                                    <select class="grade">
+                                        <option value="4.0">A / A+</option>
+                                        <option value="3.7">A-</option>
+                                        <option value="3.3">B+</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.7">B-</option>
+                                        <option value="2.3">C+</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.7">C-</option>
+                                        <option value="1.3">D+</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                                <td><button class="remove-row"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button id="add-course" class="btn-secondary">+ Add Course</button>
+                    <div class="gpa-result">
+                        <button id="calculate-gpa" class="btn-primary">Calculate GPA</button>
+                        <div class="result-display">
+                            Overall GPA: <span id="gpa-value">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <audio id="bell-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
