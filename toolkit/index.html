@@ -34,6 +34,7 @@
                 <li class="active" data-section="home"><i class="fas fa-home"></i> Home</li>
                 <li data-section="timer"><i class="fas fa-stopwatch"></i> Study Timer</li>
                 <li data-section="gpa"><i class="fas fa-calculator"></i> GPA Calculator</li>
+                <li data-section="ideas"><i class="fas fa-lightbulb"></i> Idea Board</li>
             </ul>
 
             <div class="events-section">
@@ -68,6 +69,11 @@
                         <i class="fas fa-graduation-cap"></i>
                         <h3>GPA Calculator</h3>
                         <p>Track your academic progress easily.</p>
+                    </div>
+                    <div class="card" onclick="document.querySelector('[data-section=\'ideas\']').click()">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Idea Board</h3>
+                        <p>Collaborate and share ideas with your group.</p>
                     </div>
                 </div>
             </section>
@@ -130,7 +136,56 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Idea Board Section -->
+            <section id="ideas-section" class="section hidden">
+                <div class="idea-board-header">
+                    <h2>Group Idea Board</h2>
+                    <button id="manage-members-btn" class="btn-secondary" title="Manage Group Members">
+                        <i class="fas fa-users-cog"></i>
+                    </button>
+                </div>
+                
+                <div class="idea-input-container">
+                    <div class="input-row">
+                        <select id="member-select">
+                            <option value="" disabled selected>Select your name...</option>
+                        </select>
+                        <input type="text" id="idea-input" placeholder="Enter your idea here...">
+                        <div class="button-group">
+                            <button id="add-idea-btn" class="btn-primary">Add Idea</button>
+                            <button id="clear-input-btn" class="btn-danger" title="Clear Inputs">
+                                <i class="fas fa-eraser"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="stats-section">
+                        <span id="total-ideas-counter">Total Ideas: 0</span>
+                    </div>
+                </div>
+
+                <div class="content-area">
+                    <ul id="idea-list">
+                        <li class="empty-state">No ideas yet. Be the first to share!</li>
+                    </ul>
+                </div>
+            </section>
         </main>
+    </div>
+
+    <!-- Member Management Modal -->
+    <div id="member-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Manage Members</h3>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="member-add-row">
+                <input type="text" id="new-member-input" placeholder="New member name...">
+                <button id="save-member-btn" class="btn-primary">Add</button>
+            </div>
+            <ul id="modal-member-list"></ul>
+        </div>
     </div>
 
     <audio id="bell-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
