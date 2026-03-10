@@ -99,6 +99,12 @@ body {
 }
 
 /* Sidebar & Upcoming Events */
+.container {
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+}
+
 .sidebar {
     width: 280px;
     background-color: var(--sidebar-bg);
@@ -107,6 +113,7 @@ body {
     box-shadow: 2px 0 10px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
+    min-height: 100%;
 }
 
 .sidebar ul {
@@ -132,7 +139,6 @@ body {
 
 .events-section {
     padding: 0 1.5rem;
-    margin-top: auto;
 }
 
 .events-section h4 {
