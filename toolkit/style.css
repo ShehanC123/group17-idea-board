@@ -11,6 +11,7 @@
     --card-bg: #fff;
     --accent-color: var(--ucsc-maroon);
     --secondary-accent: var(--ucsc-gold);
+    --secondary-color: #636e72;
     --danger-color: #d63031;
     --shadow: 0 4px 15px rgba(0,0,0,0.1);
     --glow-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
