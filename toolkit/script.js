@@ -19,8 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Show Target Section
             sections.forEach(section => {
+                section.classList.remove('fade-in'); // Reset animation
                 if (section.id === `${targetSection}-section`) {
                     section.classList.remove('hidden');
+                    // Force reflow to restart animation
+                    void section.offsetWidth; 
+                    section.classList.add('fade-in');
                 } else {
                     section.classList.add('hidden');
                 }
