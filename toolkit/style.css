@@ -379,11 +379,99 @@ button:disabled {
 .btn-secondary { background-color: var(--secondary-color); color: white; }
 .remove-row { background-color: transparent; color: var(--danger-color); font-size: 1.2rem; }
 
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+}
+
 @media (max-width: 768px) {
-    .container { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; }
-    .sidebar.collapsed { height: 0; transform: translateY(-100%); }
-    .welcome-cards { flex-direction: column; }
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+    
+    .navbar h1 {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        flex-direction: column;
+        position: relative;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 60px; /* Navbar height approx */
+        width: 280px;
+        height: calc(100vh - 60px);
+        z-index: 999;
+        transform: translateX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.collapsed {
+        transform: translateX(-100%);
+    }
+
+    .content {
+        padding: 1.5rem 1rem;
+        width: 100%;
+    }
+
+    .welcome-cards {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .timer-display {
+        font-size: 4rem;
+        padding: 1.5rem;
+    }
+
+    .idea-input-container .input-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .idea-input-container .button-group {
+        justify-content: flex-end;
+    }
+
+    .gpa-container {
+        padding: 1rem;
+        overflow-x: auto;
+    }
+
+    #gpa-table {
+        min-width: 450px;
+    }
+
+    .word-info {
+        position: static;
+        margin-top: 5px;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .timer-display {
+        font-size: 3rem;
+    }
+
+    .timer-controls {
+        flex-wrap: wrap;
+    }
+
+    .timer-controls button {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .navbar h1 {
+        display: none; /* Hide text on very small screens to save space */
+    }
 }
 
 /* Idea Board Section Styles */
