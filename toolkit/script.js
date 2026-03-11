@@ -216,6 +216,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let members = JSON.parse(localStorage.getItem('groupMembers')) || defaultMembers;
     let ideas = JSON.parse(localStorage.getItem('groupIdeas')) || [];
 
+    // Helper to escape HTML and prevent code execution
+    function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
     // Initialize
     function initIdeas() {
         renderMembers();
@@ -247,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const li = document.createElement('li');
             li.className = 'member-item';
             li.innerHTML = `
-                <span>${member}</span>
+                <span>${escapeHTML(member)}</span>
                 <button class="delete-member" data-index="${index}">Remove</button>
             `;
             modalMemberList.appendChild(li);
@@ -272,12 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
             li.className = 'idea-item';
             li.innerHTML = `
                 <div class="idea-header">
-                    <span class="idea-user">${idea.user}</span>
+                    <span class="idea-user">${escapeHTML(idea.user)}</span>
                     <button class="delete-idea-btn" data-index="${idea.originalIndex}" title="Delete Idea">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
-                <span class="idea-text">${idea.text}</span>
+                <span class="idea-text">${escapeHTML(idea.text)}</span>
             `;
             ideaList.appendChild(li);
         });
