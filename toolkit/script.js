@@ -182,43 +182,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateWordCount() {
         if (!ideaInput || !wordCountDisplay) return;
-        let text = ideaInput.value;
-        const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-        const count = words.length;
+        const text = ideaInput.value;
+        const count = getWordCount(text);
+        const remaining = MAX_WORDS - count;
 
         if (count > MAX_WORDS) {
-            // Find the index of the 50th word's end
-            const wordsInText = text.match(/\S+/g);
-            let limitIndex = 0;
-            let currentWordCount = 0;
-            const regex = /\S+/g;
-            let match;
-            
-            while ((match = regex.exec(text)) !== null) {
-                currentWordCount++;
-                if (currentWordCount === MAX_WORDS) {
-                    limitIndex = match.index + match[0].length;
-                    break;
-                }
+            if (wordWarning) {
+                wordWarning.textContent = "Exceeding word limit!";
+                wordWarning.classList.remove('hidden');
             }
-            
-            ideaInput.value = text.substring(0, limitIndex);
-            text = ideaInput.value;
-            if (wordWarning) wordWarning.classList.remove('hidden');
-        } else if (count === MAX_WORDS) {
-            if (wordWarning) wordWarning.classList.remove('hidden');
-        } else {
-            if (wordWarning) wordWarning.classList.add('hidden');
-        }
-
-        const remaining = MAX_WORDS - getWordCount(text);
-        wordCountDisplay.textContent = `${remaining} words remaining`;
-        
-        if (remaining <= 0) {
+            if (addIdeaBtn) addIdeaBtn.disabled = true;
             wordCountDisplay.classList.add('word-limit-reached');
         } else {
+            if (wordWarning) wordWarning.classList.add('hidden');
+            if (addIdeaBtn) addIdeaBtn.disabled = false;
             wordCountDisplay.classList.remove('word-limit-reached');
         }
+
+        wordCountDisplay.textContent = `${Math.max(0, remaining)} words remaining`;
     }
 
     if (ideaInput) {
