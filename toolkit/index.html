@@ -151,7 +151,13 @@
                         <select id="member-select">
                             <option value="" disabled selected>Select your name...</option>
                         </select>
-                        <input type="text" id="idea-input" placeholder="Enter your idea here...">
+                        <div class="input-wrapper">
+                            <input type="text" id="idea-input" placeholder="Enter your idea here...">
+                            <div class="word-info">
+                                <span id="word-limit-warning" class="warning-text hidden">Exceeding word limit!</span>
+                                <span id="word-count">50 words remaining</span>
+                            </div>
+                        </div>
                         <div class="button-group">
                             <button id="add-idea-btn" class="btn-primary">Add Idea</button>
                             <button id="clear-input-btn" class="btn-danger" title="Clear Inputs">

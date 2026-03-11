@@ -164,6 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearInputBtn = document.getElementById('clear-input-btn');
     const ideaList = document.getElementById('idea-list');
     const totalIdeasCounter = document.getElementById('total-ideas-counter');
+    const wordCountDisplay = document.getElementById('word-count');
+    const wordWarning = document.getElementById('word-limit-warning');
 
     const manageMembersBtn = document.getElementById('manage-members-btn');
     const memberModal = document.getElementById('member-modal');
@@ -171,6 +173,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const newMemberInput = document.getElementById('new-member-input');
     const saveMemberBtn = document.getElementById('save-member-btn');
     const modalMemberList = document.getElementById('modal-member-list');
+
+    const MAX_WORDS = 50;
+
+    function getWordCount(text) {
+        return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    }
+
+    function updateWordCount() {
+        if (!ideaInput || !wordCountDisplay) return;
+        let text = ideaInput.value;
+        const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+        const count = words.length;
+
+        if (count > MAX_WORDS) {
+            // Find the index of the 50th word's end
+            const wordsInText = text.match(/\S+/g);
+            let limitIndex = 0;
+            let currentWordCount = 0;
+            const regex = /\S+/g;
+            let match;
+            
+            while ((match = regex.exec(text)) !== null) {
+                currentWordCount++;
+                if (currentWordCount === MAX_WORDS) {
+                    limitIndex = match.index + match[0].length;
+                    break;
+                }
+            }
+            
+            ideaInput.value = text.substring(0, limitIndex);
+            text = ideaInput.value;
+            if (wordWarning) wordWarning.classList.remove('hidden');
+        } else if (count === MAX_WORDS) {
+            if (wordWarning) wordWarning.classList.remove('hidden');
+        } else {
+            if (wordWarning) wordWarning.classList.add('hidden');
+        }
+
+        const remaining = MAX_WORDS - getWordCount(text);
+        wordCountDisplay.textContent = `${remaining} words remaining`;
+        
+        if (remaining <= 0) {
+            wordCountDisplay.classList.add('word-limit-reached');
+        } else {
+            wordCountDisplay.classList.remove('word-limit-reached');
+        }
+    }
+
+    if (ideaInput) {
+        ideaInput.addEventListener('input', updateWordCount);
+    }
 
     // State
     const defaultMembers = [
@@ -264,8 +317,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            if (getWordCount(text) > MAX_WORDS) {
+                alert(`Your idea exceeds the ${MAX_WORDS} word limit!`);
+                return;
+            }
+
+            // Check for duplicates from the same person
+            const isDuplicate = ideas.some(idea => 
+                idea.user === user && 
+                idea.text.toLowerCase() === text.toLowerCase()
+            );
+
+            if (isDuplicate) {
+                alert('This idea has already existed.');
+                return;
+            }
+
             ideas.push({ user, text, timestamp: Date.now() });
             ideaInput.value = '';
+            updateWordCount();
             saveIdeaData();
             renderIdeas();
         });
@@ -291,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInputBtn.addEventListener('click', () => {
             ideaInput.value = '';
             memberSelect.selectedIndex = 0;
+            updateWordCount();
         });
     }
 

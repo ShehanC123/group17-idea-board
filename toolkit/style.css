@@ -403,6 +403,40 @@ button:hover {
     margin-bottom: 1rem;
 }
 
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.word-info {
+    position: absolute;
+    right: 0;
+    bottom: -22px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#word-count {
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+}
+
+.warning-text {
+    color: var(--danger-color);
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
+.word-limit-reached {
+    color: var(--danger-color) !important;
+    font-weight: bold;
+}
+
 .idea-input-container .button-group {
     display: flex;
     gap: 0.5rem;
